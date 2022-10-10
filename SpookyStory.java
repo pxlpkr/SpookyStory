@@ -1,4 +1,12 @@
-import java.util.InputMismatchException;
+/**
+ * Project: 1.3: Choose Your Path
+ * Authors: Anchal Verma & Axel Parkkila
+ * Date: 10/10/2022
+ * Course: APCSA 1
+ * Description: Recieves user input to create an interactive story.
+*/
+
+import java.util.InputMismatchException; //Error for when Scanner.nextInt recieves a non-Integer
 import java.util.Scanner;
 
 public class SpookyStory {
@@ -27,8 +35,9 @@ public class SpookyStory {
                         if (input == 1) {
                             System.out.println("Another monster was waiting when you opened the back door. Unfortunately, you die on this sad Halloween night.");
                             return;
-                        } else if (input == 2) {
-                            System.out.println("Thankfully you grabbed your weapon! You are able to defeat the monster like a mighty warrior.");
+                        } else {
+                            System.out.println("You scramble out of the window and successfully escape. You win!");
+                            return;
                         }
                     } else if (input == 2) {
                         if (hasWeapon) {
@@ -39,38 +48,66 @@ public class SpookyStory {
                             return;
                         }  
                     }
-                } else if (input == 2) {
+                } else {
                     System.out.println("You never even saw what would kill you. You died!");
+                    return;
+                }
+            } else {
+                input = questionBuilder(
+                "You hear the door closing behind you.",
+                "1) Go to the neighbor's house", "2) Look for your keys under the doormat");
+                if (input == 1) {
+                    input = questionBuilder(
+                    "You walk to your neighbor's house and even though the lights are on, there is no sign of life.",
+                    "1) Go in", "2) Go back");
+                    if (input == 1) {
+                        System.out.println("You go in the house and are horrified by the blood stains covering the ground. When you enter the next room, you find something even worse: the bodies of your neighbor's family piled on top of each other. You realize that whatever caused this might not be far away. As you try to turn back and leave the house, the door opens again and a monster is standing in the doorframe. There is nowhere for you to run. You died a miserable death.");
+                        return;
+                    } else {
+                        System.out.println("You turn around. Turns out, the monster was right behind you. You died!");
+                        return;
+                    }
+                } else {
+                    System.out.println("You bend down and raise the doormat, but do not find any keys. Suddenly, you hear somebody behind you. You died on this special Halloween night!");
                     return;
                 }
             }
         } else if (input == 2) {
-
-        } else if (input == 3) {
+            input = questionBuilder(
+            "You ignore the door, but can hear the knocks getting louder.",
+            "1) Check the window", "2) Continue not answering the door");
+            if (input == 1) {
+                System.out.println("You make eye contact with a horrific monster that is waiting outside your door. Petrified, you close the curtains at the same time that they break down the door and attack you. You died!");
+                return;
+            } else {
+                System.out.println("You hear the sound of the door breaking, but you can't react fast enough before the monster gets inside. You died!");
+                return;
+            }
+        } else {
             hasWeapon = true;
             System.out.println("You grab a weapon.");
-            main(new String[0]);
+            main(new String[0]); //Return to beginning of story
         }
     }
 
     public static int questionBuilder(String question, String... options) {
+        System.out.println(question); //Print question to user
+        for (String option : options) { //Print all options to user
+            System.out.println(option);
+        }
         while (true) {
-            System.out.println(question);
-            for (String option : options) {
-                System.out.println(option);
-            }
             int input = 0;
             try {
                 input = scanner.nextInt();
-            } catch (InputMismatchException e) {
+            } catch (InputMismatchException e) { //Checks to make sure that the input is a number
                 System.out.println("Invalid input.");
                 continue;
             }
-            if (input > options.length || input <= 0) {
+            if (input > options.length || input <= 0) { //Checks to make sure that the input is a valid option
                 System.out.println("Invalid input.");
                 continue;
             } else {
-                return input;
+                return input; //Returns id of option
             }
         }
     }
